@@ -1,0 +1,15 @@
+acme_task_create:
+    path: /create
+    defaults: { _controller: AcmeTaskBundle:Default:create }
+acme_task_view:
+    path: /{id}
+    defaults: { _controller: AcmeTaskBundle:Default:view }
+acme_task_update:
+    path: /update/{id}
+    defaults: { _controller: AcmeTaskBundle:Default:update }
+acme_task_delete:
+    path: /delete/{id}
+    defaults: { _controller: AcmeTaskBundle:Default:delete }
+acme_task_index:
+    path: /
+    defaults: { _controller: AcmeTaskBundle:Default:index }
