@@ -59,7 +59,7 @@ class Task
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="completed_at", type="datetime")
+     * @ORM\Column(name="completed_at", type="datetime", nullable=true)
      */
     private $completedAt;
 

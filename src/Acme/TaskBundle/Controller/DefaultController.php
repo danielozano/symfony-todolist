@@ -15,7 +15,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Acme\TaskBundle\Entity\Task;
+use Acme\TaskBundle\Form\Type\TaskType;
 
 class DefaultController extends Controller
 {
@@ -31,16 +33,12 @@ class DefaultController extends Controller
     	$tasks = $taskRepository->findAll();
     	
     	$task = new Task();
-    	$form = $this->createFormBuilder($task)
-    		->setAction($this->generateUrl('acme_task_create'))
-    		->add('title', TextType::class)
-    		->add('description', TextareaType::class)
-    		->add('save', SubmitType::class, array('label' => 'Create Task'))
-    		->getForm();
+    	$formOptions = array('action' => $this->generateUrl('acme_task_create'));
+   		$form = $this->createForm(TaskType::class, $task, $formOptions);
 
         return $this->render('AcmeTaskBundle:Default:index.html.twig', array(
         	'tasks' => $tasks,
-        	'form' => $form->createView()
+        	'form' 	=> $form->createView()
         ));
     }
 
@@ -52,10 +50,28 @@ class DefaultController extends Controller
 
     public function createAction(Request $request)
     {
-    	echo "<pre>";
-    	var_dump($request);
-    	echo "</pre>";
-    	die();
+    	$task = new Task();
+    	$form = $this->createForm(TaskType::class, $task);
+
+    	$form->handleRequest($request);
+
+    	if ($form->isValid())
+    	{
+    		$now = new \DateTime();
+    		$task = $form->getData();
+    		$task->setCreatedAt($now);
+    		$task->setUpdatedAt($now);
+    		$task->setCompleted(false);
+
+    		$em = $this->getDoctrine()->getManager();
+    		$em->persist($task);
+    		$em->flush();
+    		return $this->redirectToRoute('acme_task_index');
+    	}
+    	else
+    	{
+    		return new Response('Bad submit');
+    	}
     }
 
     public function updateAction($id)
