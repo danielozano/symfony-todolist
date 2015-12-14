@@ -1,25 +1,29 @@
-<section>
-{% if tasks %}
-	{% for task in tasks %}
-	<article>
-		<header>
-			<h2>
-				<a href="{{ path('acme_task_view', {'id': task.id}) }}">{{ task.title }}</a>
-			</h2>
-		</header>
-		<footer>
-			<small>{{ task.createdAt|date('Y-m-d H:i:s') }}</small>
-		</footer>
-	</article>
-	<hr>
-	{% endfor %}
-{% else %}
-	<h1>No tasks added.</h1>
-{% endif %}
-</section>
-<section>
-	<h2>Add a new task</h2>
-	{{ form_start(form) }}
-	{{ form_widget(form) }}
-	{{ form_end(form) }}
-</section>
+{% extends 'AcmeTaskBundle::base.html.twig' %}
+{% block title %}Task List{% endblock %}
+{% block body %}
+	<section>
+	{% if tasks %}
+		{% for task in tasks %}
+		<article>
+			<header>
+				<h2>
+					<a href="{{ path('acme_task_view', {'id': task.id}) }}">{{ task.title }}</a>
+				</h2>
+			</header>
+			<footer>
+				<small>{{ task.createdAt|date('Y-m-d H:i:s') }}</small>
+			</footer>
+		</article>
+		<hr>
+		{% endfor %}
+	{% else %}
+		<h1>No tasks added.</h1>
+	{% endif %}
+	</section>
+	<section>
+		<h2>Add a new task</h2>
+		{{ form_start(form) }}
+		{{ form_widget(form) }}
+		{{ form_end(form) }}
+	</section>
+{% endblock %}
