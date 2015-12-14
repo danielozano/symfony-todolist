@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO: listar dicha tarea en el listado
- * TODO: permitir ver los detalles de dicha tarea
  * TODO: permitir borrar la tarea
  * TODO: permitir editar la tarea
  * TODO: permitir completar la tarea
@@ -9,9 +7,6 @@
 namespace Acme\TaskBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Acme\TaskBundle\Entity\Task;
@@ -19,11 +14,6 @@ use Acme\TaskBundle\Form\Type\TaskType;
 
 class DefaultController extends Controller
 {
-	/**
-	 * TODO: list all the tasks (if there are), and show the new task form
-	 * @param  Request $request
-	 * @return
-	 */
     public function indexAction(Request $request)
     {
 
@@ -89,7 +79,18 @@ class DefaultController extends Controller
 
     public function deleteAction($id)
     {
-    	echo "delete $id";
-    	die();
+    	$em = $this->getDoctrine()->getManager();
+    	$taskRepo = $this->getDoctrine()->getRepository('AcmeTaskBundle:Task');
+    	$task = $taskRepo->find($id);
+
+    	if ($task)
+    	{
+    		$em->remove($task);
+    		$em->flush();
+    		// TODO: Redirect with Ok Message
+    		return $this->redirectToRoute('acme_task_index');
+    	}
+    	// TODO: Redirect with Errors
+    	return $this->redirectToRoute('acme_task_index');
     }
 }

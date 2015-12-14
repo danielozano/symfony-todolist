@@ -10,6 +10,7 @@
 			</main>
 			<footer>
 				Created at: {{ task.createdAt|date('Y-m-d H:i:s') }}
+				<a href="{{ path('acme_task_delete', {'id': task.id}) }}">Remove Task</a>
 			</footer>
 		</article>
 	{% else %}

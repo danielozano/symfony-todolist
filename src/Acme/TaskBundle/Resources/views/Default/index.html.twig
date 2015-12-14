@@ -12,6 +12,7 @@
 			</header>
 			<footer>
 				<small>{{ task.createdAt|date('Y-m-d H:i:s') }}</small>
+				<a href="{{ path('acme_task_delete', {'id': task.id}) }}">Remove Task</a>
 			</footer>
 		</article>
 		<hr>
