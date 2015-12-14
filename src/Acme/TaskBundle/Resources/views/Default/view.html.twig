@@ -1,0 +1,18 @@
+{% if task %}
+	<article>
+		<header>
+			<h3>{{task.title}}</h3>
+		</header>
+		<main>
+			<p>{{task.description}}</p>
+		</main>
+		<footer>
+			Created at: {{ task.createdAt|date('Y-m-d H:i:s') }}
+		</footer>
+	</article>
+{% else %}
+	<h3>Error, empty task.</h3>
+{% endif %}
+<div>
+	<a href="{{ path('acme_task_index') }}">Go Back</a>
+</div>

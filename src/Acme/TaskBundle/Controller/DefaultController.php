@@ -1,7 +1,5 @@
 <?php
 /**
- * TODO: crear formulario para creación de task
- * TODO: crear nueva task mediante formulario
  * TODO: listar dicha tarea en el listado
  * TODO: permitir ver los detalles de dicha tarea
  * TODO: permitir borrar la tarea
@@ -22,17 +20,17 @@ use Acme\TaskBundle\Form\Type\TaskType;
 class DefaultController extends Controller
 {
 	/**
-	 * TODO: listar tareas existentes si existen, y mostrar formulario para crear nuevas tareas
-	 * @param  Request $request [description]
-	 * @return [type]           [description]
+	 * TODO: list all the tasks (if there are), and show the new task form
+	 * @param  Request $request
+	 * @return
 	 */
     public function indexAction(Request $request)
     {
 
     	$taskRepository = $this->getDoctrine()->getRepository('AcmeTaskBundle:Task');
     	$tasks = $taskRepository->findAll();
-    	
     	$task = new Task();
+
     	$formOptions = array('action' => $this->generateUrl('acme_task_create'));
    		$form = $this->createForm(TaskType::class, $task, $formOptions);
 
@@ -44,10 +42,19 @@ class DefaultController extends Controller
 
     public function viewAction($id)
     {
-    	echo "view $id";
-    	die();
+    	$taskRepo = $this->getDoctrine()->getRepository('AcmeTaskBundle:Task');
+    	$task = $taskRepo->find($id);
+    	
+    	return $this->render('AcmeTaskBundle:Default:view.html.twig', array(
+    		'task' => $task
+    	));
     }
-
+    /**
+     * TODO: Move the datetime creation to doctrine persist routine
+     * Task API create task object and persist on Database
+     * @param  Request $request
+     * @return
+     */
     public function createAction(Request $request)
     {
     	$task = new Task();
