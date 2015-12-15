@@ -70,10 +70,33 @@ class DefaultController extends Controller
     	}
     }
 
-    public function updateAction($id)
+    public function updateAction(Request $request, $id)
     {
-    	echo "update $id";
-    	die();
+    	$taskRepo = $this->getDoctrine()->getRepository('AcmeTaskBundle:Task');
+    	$task = $taskRepo->find($id);
+    	if ($task)
+    	{
+    		$formOptions = array('action' => $this->generateUrl('acme_task_update', array('id' => $id)));
+    		$form = $this->createForm(TaskType::class, $task,$formOptions);
+    		$form->handleRequest($request);
+    		if ($form->isValid())
+    		{
+    			$now = new \DateTime();
+    			$task = $form->getData();
+    			$task->setUpdatedAt($now);
+    			$task->setCompleted(false);
+    			$task->setTitle($task->getTitle());
+    			$task->setDescription($task->getDescription());
+    			$em = $this->getDoctrine()->getManager();
+    			$em->flush();
+    			// TODO: Redirect with message
+    			return $this->redirectToRoute('acme_task_index');
+    		}
+    		return $this->render('AcmeTaskBundle:Default:update.html.twig', array(
+    			'task' => $task,
+    			'form' => $form->createView()
+    		));
+    	}
     }
 
     public function deleteAction($id)

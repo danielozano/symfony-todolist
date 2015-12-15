@@ -15,7 +15,7 @@ class TaskType extends AbstractType
 		$builder
 			->add('title', TextType::class)
 			->add('description', TextareaType::class)
-			->add('save', SubmitType::class, array('label' => 'Create Task'));
+			->add('save', SubmitType::class, array('label' => 'Save'));
 	}
 
 	public function getName()

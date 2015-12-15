@@ -1,0 +1,8 @@
+{% extends 'AcmeTaskBundle::base.html.twig' %}
+{% block title %}Update Task - {{ task.id }}{% endblock %}
+{% block body %}
+	<h1>Update Task</h1>
+	{{ form_start(form) }}
+		{{ form_widget(form) }}
+	{{ form_end(form) }}
+{% endblock %}

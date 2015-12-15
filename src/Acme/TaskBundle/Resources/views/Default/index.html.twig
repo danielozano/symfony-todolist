@@ -11,8 +11,16 @@
 				</h2>
 			</header>
 			<footer>
-				<small>{{ task.createdAt|date('Y-m-d H:i:s') }}</small>
-				<a href="{{ path('acme_task_delete', {'id': task.id}) }}">Remove Task</a>
+				<small>
+					{{ task.createdAt|date('Y-m-d H:i:s') }}
+					{% if task.updatedAt > task.createdAt %}
+					- updated: {{ task.updatedAt|date('Y-m-d H:i:s') }}
+					{% endif %}
+				</small>
+				<div>
+					<a href="{{ path('acme_task_delete', {'id': task.id}) }}">Remove Task</a>
+					<a href="{{ path('acme_task_update', {'id': task.id}) }}">Update Task</a>
+				</div>
 			</footer>
 		</article>
 		<hr>
