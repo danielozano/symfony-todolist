@@ -1,6 +1,5 @@
 <?php
 /**
- * TODO: permitir borrar la tarea
  * TODO: permitir editar la tarea
  * TODO: permitir completar la tarea
  */
