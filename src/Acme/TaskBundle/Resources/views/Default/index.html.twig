@@ -2,13 +2,15 @@
 {% block title %}Task List{% endblock %}
 {% block body %}
 	<section>
-	{% if tasks %}
-		{% for task in tasks %}
+	{% if incompleteTasks %}
+		<h2>Todo tasks:</h2>
+		{% for task in incompleteTasks %}
 		<article>
 			<header>
-				<h2>
+				<h3>
 					<a href="{{ path('acme_task_view', {'id': task.id}) }}">{{ task.title }}</a>
-				</h2>
+				</h3>
+				<h4><a href="{{ path('acme_task_status', {'status': 'complete', 'id': task.id}) }}">Set as completed</a></h4>
 			</header>
 			<footer>
 				<small>
@@ -26,7 +28,7 @@
 		<hr>
 		{% endfor %}
 	{% else %}
-		<h1>No tasks added.</h1>
+		<h1>No tasks todo.</h1>
 	{% endif %}
 	</section>
 	<section>
@@ -35,4 +37,15 @@
 		{{ form_widget(form) }}
 		{{ form_end(form) }}
 	</section>
+
+	{% if completedTasks %}
+		<h2>Completed tasks</h2>
+		<ul>
+		{% for task in completedTasks %}
+			<li>
+				<a href="{{ path('acme_task_view', {'id': task.id}) }}">{{ task.title }}</a> - <a href="{{ path('acme_task_status', {'status': 'incomplete', 'id': task.id }) }}">set as incomplete</a>
+			</li>
+		{% endfor %}
+		</ul>
+	{% endif %}
 {% endblock %}

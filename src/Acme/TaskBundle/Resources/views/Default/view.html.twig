@@ -8,12 +8,19 @@
 			<main>
 				<p>{{task.description}}</p>
 			</main>
+			{% if task.completed %}
+			<p>
+				This task is completed, <a href="{{ path('acme_task_status', {'status':'incomplete', 'id': task.id}) }}">UNDO</a>
+			</p>
+			{% else %}
+				This task is not compelted, <a href="{{ path('acme_task_status', {'status': 'complete', 'id': task.id}) }}">COMPLETE</a>
+			{% endif %}
 			<footer>
 				Created at: {{ task.createdAt|date('Y-m-d H:i:s') }}
 				{% if task.updatedAt > task.createdAt %}
 					<br>Updated at: {{ task.updatedAt|date('Y-m-d H:i:s') }}
 				{% endif %}
-				<a href="{{ path('acme_task_delete', {'id': task.id}) }}">Remove Task</a>
+				<a href="{{ path('acme_task_delete', {'id': task.id}) }}">Remove Task</a> <br>
 			</footer>
 		</article>
 	{% else %}

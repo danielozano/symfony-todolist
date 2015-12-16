@@ -1,3 +1,6 @@
+acme_task_status:
+    path: /status/{status}/{id}
+    defaults: { _controller: AcmeTaskBundle:Default:status }
 acme_task_create:
     path: /create
     defaults: { _controller: AcmeTaskBundle:Default:create }

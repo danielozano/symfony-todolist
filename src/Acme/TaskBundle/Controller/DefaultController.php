@@ -1,8 +1,4 @@
 <?php
-/**
- * TODO: permitir editar la tarea
- * TODO: permitir completar la tarea
- */
 namespace Acme\TaskBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,14 +13,17 @@ class DefaultController extends Controller
     {
 
     	$taskRepository = $this->getDoctrine()->getRepository('AcmeTaskBundle:Task');
-    	$tasks = $taskRepository->findAll();
+
+    	$incompleteTasks = $taskRepository->findBy(array('completed' => false));
+    	$completedTasks = $taskRepository->findBy(array('completed' => true));
     	$task = new Task();
 
     	$formOptions = array('action' => $this->generateUrl('acme_task_create'));
    		$form = $this->createForm(TaskType::class, $task, $formOptions);
 
         return $this->render('AcmeTaskBundle:Default:index.html.twig', array(
-        	'tasks' => $tasks,
+        	'completedTasks' => $completedTasks,
+        	'incompleteTasks' => $incompleteTasks,
         	'form' 	=> $form->createView()
         ));
     }
@@ -113,6 +112,33 @@ class DefaultController extends Controller
     		return $this->redirectToRoute('acme_task_index');
     	}
     	// TODO: Redirect with Errors
+    	return $this->redirectToRoute('acme_task_index');
+    }
+
+    public function statusAction(Request $request, $status, $id)
+    {
+    	$doctrine = $this->getDoctrine();
+    	$em = $doctrine->getManager();
+    	$taskRepo = $doctrine->getRepository('AcmeTaskBundle:Task');
+    	$task = $taskRepo->find($id);
+
+    	if ($task)
+    	{
+    		switch ($status) 
+    		{
+    			case 'complete':
+    				$task->setCompleted(true);
+    				break;
+    			case 'incomplete':
+    				$task->setCompleted(false);
+    				break;
+    			default:
+    				break;
+    		}
+    		$em->persist($task);
+    		$em->flush();
+    	}
+    	// TODO: add flash message
     	return $this->redirectToRoute('acme_task_index');
     }
 }
