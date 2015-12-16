@@ -14,6 +14,7 @@ TODO
 * cleanup controller (so much repeated code).
 * Add frontend dev.
 * Add migrations and maybe installation script
+
 NOTES
 -----------------
 The project is in dev enviroment.
