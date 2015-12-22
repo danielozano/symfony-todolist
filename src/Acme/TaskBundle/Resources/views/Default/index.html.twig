@@ -3,14 +3,19 @@
 {% block body %}
 	<section>
 	{% if incompleteTasks %}
-		<h2>Todo tasks:</h2>
+		<h1 class="header">Todo tasks:</h1>
 		{% for task in incompleteTasks %}
 		<article>
 			<header>
-				<h3>
+				<h4>
 					<a href="{{ path('acme_task_view', {'id': task.id}) }}">{{ task.title }}</a>
+					<br>
+					<small>
+						<a href="{{ path('acme_task_status', {'status': 'complete', 'id': task.id}) }}" class="label label-success">
+							+ Set as completed
+						</a>
+					</small>
 				</h3>
-				<h4><a href="{{ path('acme_task_status', {'status': 'complete', 'id': task.id}) }}">Set as completed</a></h4>
 			</header>
 			<footer>
 				<small>
@@ -20,8 +25,8 @@
 					{% endif %}
 				</small>
 				<div>
-					<a href="{{ path('acme_task_delete', {'id': task.id}) }}">Remove Task</a>
-					<a href="{{ path('acme_task_update', {'id': task.id}) }}">Update Task</a>
+					<a href="{{ path('acme_task_delete', {'id': task.id}) }}" class="btn btn-danger" role="button">Remove Task</a>
+					<a href="{{ path('acme_task_update', {'id': task.id}) }}" class="btn btn-primary" role="button">Update Task</a>
 				</div>
 			</footer>
 		</article>
@@ -31,11 +36,20 @@
 		<h1>No tasks todo.</h1>
 	{% endif %}
 	</section>
-	<section>
-		<h2>Add a new task</h2>
-		{{ form_start(form) }}
-		{{ form_widget(form) }}
-		{{ form_end(form) }}
+	<section class="row">
+		<div class="col-xs-12 col-md-6">
+			<h2>Add a new task</h2>
+			{{ form_label(form) }}
+			{{ form_errors(form) }}
+			{{ form_label(form.title) }}
+			{{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+			{{ form_label(form.description) }}
+			{{ form_widget(form.description, {'attr': {'class': 'form-control'}})}}
+			{{ form_widget(form._token) }}
+			<br>
+			{{ form_widget(form.save, {'attr': {'class': 'btn bnt-primary'}})}}
+			
+		</div>
 	</section>
 
 	{% if completedTasks %}
