@@ -2,6 +2,11 @@
 {% block title %}Task List{% endblock %}
 {% block body %}
 	<section>
+	{% for taskResponse in app.session.flashbag.get('taskAction') %}
+		<div class="{{ taskResponse.class }}">
+			{{ taskResponse.message }}
+		</div>
+	{% endfor %}
 	{% if incompleteTasks %}
 		<h1 class="header">Todo tasks:</h1>
 		{% for task in incompleteTasks %}

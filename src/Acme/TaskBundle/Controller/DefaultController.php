@@ -32,7 +32,6 @@ class DefaultController extends Controller
     {
     	$taskRepo = $this->getDoctrine()->getRepository('AcmeTaskBundle:Task');
     	$task = $taskRepo->find($id);
-    	
     	return $this->render('AcmeTaskBundle:Default:view.html.twig', array(
     		'task' => $task
     	));
@@ -61,6 +60,10 @@ class DefaultController extends Controller
     		$em = $this->getDoctrine()->getManager();
     		$em->persist($task);
     		$em->flush();
+            $this->_flashMessage('taskAction', array(
+                    'class'     => 'alert alert-success',
+                    'message'   => 'Task created correctly.'
+            ));
     		return $this->redirectToRoute('acme_task_index');
     	}
     	else
@@ -89,6 +92,12 @@ class DefaultController extends Controller
     			$em = $this->getDoctrine()->getManager();
     			$em->flush();
     			// TODO: Redirect with message
+                $this->_flashMessage(
+                    'taskAction',
+                    array(
+                        'class'     => 'alert alert-success',
+                        'message'   => "Task with id: " . $task->getId() . " updated correctly"
+                ));
     			return $this->redirectToRoute('acme_task_index');
     		}
     		return $this->render('AcmeTaskBundle:Default:update.html.twig', array(
@@ -108,7 +117,12 @@ class DefaultController extends Controller
     	{
     		$em->remove($task);
     		$em->flush();
-    		// TODO: Redirect with Ok Message
+    		$this->_flashMessage(
+                'taskAction',
+                array(
+                    'class'     => 'alert alert-danger',
+                    'message'   => 'Task with id: ' . $id . ' has been deleted' 
+            ));
     		return $this->redirectToRoute('acme_task_index');
     	}
     	// TODO: Redirect with Errors
@@ -128,9 +142,21 @@ class DefaultController extends Controller
     		{
     			case 'complete':
     				$task->setCompleted(true);
+                    $this->_flashMessage(
+                        'taskAction',
+                        array(
+                            'class'     => 'alert alert-success',
+                            'message'   =>'Task with id: ' . $id . ' completed'
+                    ));
     				break;
     			case 'incomplete':
     				$task->setCompleted(false);
+                    $this->_flashMessage(
+                        'taskAction',
+                        array(
+                            'class'     => 'alert alert-warning',
+                            'message'   =>'Task with d: ' . $id . ' set as incomplete'
+                    ));                    
     				break;
     			default:
     				break;
@@ -140,5 +166,11 @@ class DefaultController extends Controller
     	}
     	// TODO: add flash message
     	return $this->redirectToRoute('acme_task_index');
+    }
+
+    private function _flashMessage ($name, $options)
+    {
+        $flashBag = $this->get('session')->getFlashBag();
+        $flashBag->add($name, $options);
     }
 }
