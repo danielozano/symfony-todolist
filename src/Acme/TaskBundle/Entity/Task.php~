@@ -59,7 +59,7 @@ class Task
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="completed_at", type="datetime")
+     * @ORM\Column(name="completed_at", type="datetime", nullable=true)
      */
     private $completedAt;
 
@@ -144,5 +144,76 @@ class Task
     {
         return $this->createdAt;
     }
-}
 
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     *
+     * @return Task
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set completed
+     *
+     * @param boolean $completed
+     *
+     * @return Task
+     */
+    public function setCompleted($completed)
+    {
+        $this->completed = $completed;
+
+        return $this;
+    }
+
+    /**
+     * Get completed
+     *
+     * @return boolean
+     */
+    public function getCompleted()
+    {
+        return $this->completed;
+    }
+
+    /**
+     * Set completedAt
+     *
+     * @param \DateTime $completedAt
+     *
+     * @return Task
+     */
+    public function setCompletedAt($completedAt)
+    {
+        $this->completedAt = $completedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get completedAt
+     *
+     * @return \DateTime
+     */
+    public function getCompletedAt()
+    {
+        return $this->completedAt;
+    }
+}

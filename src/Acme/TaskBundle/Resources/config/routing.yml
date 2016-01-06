@@ -1,3 +1,6 @@
+acme_user_registation:
+    path: /user/register
+    defaults: { _controller: AcmeTaskBundle:User:register }
 acme_task_status:
     path: /status/{status}/{id}
     defaults: { _controller: AcmeTaskBundle:Default:status }

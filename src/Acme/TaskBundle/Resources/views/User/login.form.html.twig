@@ -1,0 +1,17 @@
+{% extends 'AcmeTaskBundle::base.html.twig' %}
+{% block title %}Login or Create your Account{% endblock %}
+{% block body %}
+	<header>
+		<h1>Identificate!</h1>
+	</header>
+	{% if error %}
+		<div>{{ error.message }}</div>
+	{% endif %}
+	<form action="{{ path('login_check') }}" method="post">
+		<label for="username">Username</label>
+		<input type="text" id="username" name="_username" value="{{ lastUsername }}">
+		<label for="password">Password</label>
+		<input type="password" id="password" name="_password">
+		<button type="submit">Login</button>
+	</form>
+{% endblock %}

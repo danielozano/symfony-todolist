@@ -91,7 +91,6 @@ class DefaultController extends Controller
     			$task->setDescription($task->getDescription());
     			$em = $this->getDoctrine()->getManager();
     			$em->flush();
-    			// TODO: Redirect with message
                 $this->_flashMessage(
                     'taskAction',
                     array(
@@ -125,7 +124,6 @@ class DefaultController extends Controller
             ));
     		return $this->redirectToRoute('acme_task_index');
     	}
-    	// TODO: Redirect with Errors
     	return $this->redirectToRoute('acme_task_index');
     }
 
@@ -164,7 +162,6 @@ class DefaultController extends Controller
     		$em->persist($task);
     		$em->flush();
     	}
-    	// TODO: add flash message
     	return $this->redirectToRoute('acme_task_index');
     }
 
