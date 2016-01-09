@@ -1,3 +1,6 @@
+acme_security:
+    resource: "@AcmeSecurityBundle/Resources/config/routing.yml"
+    prefix:   /
 acme_task:
     resource: "@AcmeTaskBundle/Resources/config/routing.yml"
     prefix:   /
