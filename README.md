@@ -1,7 +1,7 @@
 README
 ======
 
-What is this proejct for?
+What is this project for?
 -----------------
 
 Im just learning about symfony 3. So its a really easy project to test (almost all) the features.
@@ -15,6 +15,7 @@ TODO
 * Add migrations and maybe installation script.
 * Add ACL.
 * Add users private/public tasks.
+
 NOTES
 -----------------
 The project is in dev enviroment.
